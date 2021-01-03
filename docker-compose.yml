@@ -7,7 +7,8 @@ services:
       context: .
       dockerfile: minimal.dockerfile
       args:
-        - py_ver=3.7
+        - BASE_CONTAINER=jupyter/minimal-notebook:703d8b2dcb88
+        - python_version=3.7
         - conda_env=python37
   scipy_notebook:
     image: scipy-notebook:python-3.7

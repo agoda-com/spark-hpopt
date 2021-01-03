@@ -75,7 +75,7 @@ In order to retrieve a `DataFrame` with all iterations steps, you can use `Hyper
 
 
 ## Run the Notebooks with docker-stacks
-You can run the [notebooks](notebooks) yourself, using a docker image with Jupyter, Apache Spark and a spylon kernel for scala provided by <https://github.com/jupyter/docker-stacks>.
+You can run the [notebooks](notebooks) yourself, using a docker image with Jupyter, Apache Spark and a spylon kernel for scala provided by <https://github.com/jupyter/docker-stacks>. You can see in [docker-compose.yml](docker-compose.yml), that we fixed the image tag of the pulled image. You can try to change the image tage to `latest` or another more recent tag.
 
 In order to run a container with Spark 2.4.7 and scala 2.11 (that's what the spylon kernel is built for) you need to take the following steps. If not said otherwise, run the commands in the main folder of this project.
    

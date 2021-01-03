@@ -1,12 +1,13 @@
 # Choose your desired base image
-FROM jupyter/minimal-notebook:latest
+ARG BASE_CONTAINER=jupyter/minimal-notebook:703d8b2dcb88
+FROM $BASE_CONTAINER
 
 # name your environment and choose python 3.x version
 ARG conda_env=python37
-ARG py_ver=3.7
+ARG python_version=3.7
 
 # you can add additional libraries you want conda to install by listing them below the first line and ending with "&& \"
-RUN conda create --quiet --yes -p $CONDA_DIR/envs/$conda_env python=$py_ver ipython ipykernel && \
+RUN conda create --quiet --yes -p $CONDA_DIR/envs/$conda_env python=$python_version ipython ipykernel && \
     conda clean --all -f -y
 
 
