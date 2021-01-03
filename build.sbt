@@ -4,7 +4,7 @@ import sbt._
 
 val baseSettings = Seq(
   organization := "com.agoda.ml.spark.hpopt",
-  scalaVersion := "2.11.12",
+  scalaVersion := "2.12.12",
   fork in Test := true,
   javaOptions in Test += "-Xmx4G",
   concurrentRestrictions in Global += Tags.limit(Tags.Test, 1),
@@ -15,7 +15,7 @@ val assemblySettings = Seq(
   assemblyJarName in assembly := "assembly.jar"
 )
 
-val SparkVersion = "2.4.7"
+val SparkVersion = "3.0.1"
 
 val v = new {
   val scalatest     = "3.0.4"

@@ -77,22 +77,19 @@ In order to retrieve a `DataFrame` with all iterations steps, you can use `Hyper
 ## Run the Notebooks with docker-stacks
 You can run the [notebooks](notebooks) yourself, using a docker image with Jupyter, Apache Spark and a spylon kernel for scala provided by <https://github.com/jupyter/docker-stacks>. You can see in [docker-compose.yml](docker-compose.yml), that we fixed the image tag of the pulled image. You can try to change the image tage to `latest` or another more recent tag.
 
-In order to run a container with Spark 2.4.7 and scala 2.11 (that's what the spylon kernel is built for) you need to take the following steps. If not said otherwise, run the commands in the main folder of this project.
+In order to run a container with Spark 3.0.1 and scala 2.12  you need to take the following steps. If not said otherwise, run the commands in the main folder of this project.
    
 1. Run `sbt assembly`
    
-   This will create a fat jar and saves it as `hpopt/target/scala-2.11/assembly.jar`. Later this jar will be copied to the docker image and loaded into the Jupyter notebook in order to use the package.
+   This will create a fat jar and saves it as `hpopt/target/scala-2.12/assembly.jar`. Later this jar will be copied to the docker image and loaded into the Jupyter notebook in order to use the package.
    
 2. Create a folder `notebooks_from_container` in the main folder of this project. Copy the notebooks from [notebooks](notebooks) into this folder. This folder will later be mirrored as a volume inside the docker image.
-
-3. Run `git clone https://github.com/jupyter/docker-stacks` in the parent folder of this project. (Latest commit that was checked and worked was `commit 703d8b2dcb886be2fe5aa4660a48fbcef647e7aa`. If you are facing problems you might want to try with this commit.)
-
-   If this repository is in the same parent folder as the spark-hpopt project, you won't have to change the paths to the Dockerfiles in [docker-compose.yml](docker-compose.yml).
    
-4. Run `docker-compose build`
+3. Run `docker-compose build`
    
-    This command will trigger the build of several docker images build on top of each other defined in [docker-compose.yml](docker-compose.yml) and under the usage of [minimal.dockerfile](minimal.dockerfile) and [Dockerfile](Dockerfile).
-5. Run `docker-compose up hpopt_notebook`
+    This command will trigger the build of the docker image build on top of `jupyter/all-spark-notebook` defined in [docker-compose.yml](docker-compose.yml) and under the usage of [Dockerfile](Dockerfile).
+   
+4. Run `docker-compose up hpopt_notebook`
 
     Finally, runs the container. You should now be able to access Jupyter by using the link <http://127.0.0.1:8888>. We can access the Spark UI for up to 3 jobs using the ports 4040, 4041 and 4042. If that's not enough for you, you can expose more ports.
 

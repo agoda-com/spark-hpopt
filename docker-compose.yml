@@ -1,43 +1,12 @@
 version: '3'
 
 services:
-  minimal_notebook:
-    image: minimal-notebook:python-3.7
-    build:
-      context: .
-      dockerfile: minimal.dockerfile
-      args:
-        - BASE_CONTAINER=jupyter/minimal-notebook:703d8b2dcb88
-        - python_version=3.7
-        - conda_env=python37
-  scipy_notebook:
-    image: scipy-notebook:python-3.7
-    build:
-      context: ../docker-stacks/scipy-notebook
-      args:
-        - BASE_CONTAINER=minimal-notebook:python-3.7
-  pyspark_notebook:
-    image: pyspark-notebook:pyspark-2.4.7
-    build:
-      context: ../docker-stacks/pyspark-notebook
-      args:
-        - BASE_CONTAINER=scipy-notebook:python-3.7
-        - spark_version=2.4.7
-        - hadoop_version=2.7
-        - spark_checksum=0F5455672045F6110B030CE343C049855B7BA86C0ECB5E39A075FF9D093C7F648DA55DED12E72FFE65D84C32DCD5418A6D764F2D6295A3F894A4286CC80EF478
-        - openjdk_version=8
-  all_spark_notebook:
-    image: all-spark-notebook:spark-2.4.7
-    build:
-      context: ../docker-stacks/all-spark-notebook
-      args:
-        - BASE_CONTAINER=pyspark-notebook:pyspark-2.4.7
   hpopt_notebook:
-    image: hpopt:spark-2.4.7
+    image: hpopt:spark-3.0.1
     build:
       context: .
       args:
-        - BASE_CONTAINER=all-spark-notebook:spark-2.4.7
+        - BASE_CONTAINER=jupyter/all-spark-notebook:703d8b2dcb88
     volumes:
       - ./notebooks_from_container:/home/jovyan/hpopt_notebooks
     ports:
