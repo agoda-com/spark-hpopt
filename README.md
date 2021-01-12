@@ -85,7 +85,7 @@ In order to run a container with Spark 2.4.7 and scala 2.11 (that's what the spy
    
 2. Create a folder `notebooks_from_container` in the main folder of this project. Copy the notebooks from [notebooks](notebooks) into this folder. This folder will later be mirrored as a volume inside the docker image.
 
-3. Run `git clone https://github.com/jupyter/docker-stacks` in the parent folder of this project.
+3. Run `git clone https://github.com/jupyter/docker-stacks` in the parent folder of this project. (Latest commit that was checked and worked was `commit 703d8b2dcb886be2fe5aa4660a48fbcef647e7aa`. If you are facing problems you might want to try with this commit.)
 
    If this repository is in the same parent folder as the spark-hpopt project, you won't have to change the paths to the Dockerfiles in [docker-compose.yml](docker-compose.yml).
    
