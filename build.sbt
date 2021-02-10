@@ -18,13 +18,18 @@ val assemblySettings = Seq(
 val SparkVersion = "2.4.7"
 
 val v = new {
-  val scalatest     = "3.0.4"
-  val scalamock     = "3.6.0"
+  val scalatest = "3.0.4"
+  val scalamock = "3.6.0"
+  val breeze    = "0.13.2" // Should be compatible with the spark version
 }
 
 val baseDependencies = Seq(
   "org.scalatest" %% "scalatest" % v.scalatest % "test",
   "org.scalamock" %% "scalamock-scalatest-support" % v.scalamock % "test"
+)
+
+val mainDependencies = baseDependencies ++ Seq(
+  "org.scalanlp" %% "breeze" % v.breeze
 )
 
 val sparkDependencies = baseDependencies ++ Seq(
@@ -38,6 +43,14 @@ lazy val hpopt = project
   .settings(baseSettings: _*)
   .settings(assemblySettings: _*)
   .settings(
-    libraryDependencies ++= sparkDependencies,
+    libraryDependencies ++= mainDependencies,
     name := "hpopt"
   )
+
+lazy val hpopt_sparkutil = project
+  .settings(baseSettings: _*)
+  .settings(assemblySettings: _*)
+  .settings(
+    libraryDependencies ++= sparkDependencies,
+    name:= "hpopt_sparkutil"
+  ).dependsOn(hpopt)

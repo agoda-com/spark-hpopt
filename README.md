@@ -79,9 +79,9 @@ You can run the [notebooks](notebooks) yourself, using a docker image with Jupyt
 
 In order to run a container with Spark 2.4.7 and scala 2.11 (that's what the spylon kernel is built for) you need to take the following steps. If not said otherwise, run the commands in the main folder of this project.
    
-1. Run `sbt assembly`
+1. Run `sbt "project hpopt_sparkutil" "assembly"`
    
-   This will create a fat jar and saves it as `hpopt/target/scala-2.11/assembly.jar`. Later this jar will be copied to the docker image and loaded into the Jupyter notebook in order to use the package.
+   This will create a fat jar and saves it as `hpopt_sparkutil/target/scala-2.11/assembly.jar`. Later this jar will be copied to the docker image and loaded into the Jupyter notebook in order to use the package.
    
 2. Create a folder `notebooks_from_container` in the main folder of this project. Copy the notebooks from [notebooks](notebooks) into this folder. This folder will later be mirrored as a volume inside the docker image.
 

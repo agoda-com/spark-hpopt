@@ -1,8 +1,6 @@
 package com.agoda.ml.spark.hpopt
 package hyperparam
 
-import org.apache.spark.sql.types._
-
 import scala.util.Random
 
 /**
@@ -42,9 +40,9 @@ trait HyperparameterType[A] {
   val maxResidual: Double
 
   /**
-   * The spark SQL data type
+   * The spark SQL data type string representation
    */
-  val dataType: DataType
+  val dataType: String
 
   /**
    * Creates a [[Hyperparameter]] with this type and the provided value
@@ -78,13 +76,13 @@ trait HyperparameterType[A] {
 
 case class CategoricalHyperparameterType(paramName: String, categories: Seq[String], maxResidual: Double = 1.0)
   extends HyperparameterType[String] {
-  override val dataType: DataType = StringType
+  override val dataType: String = "string"
   override def createRandomHp(random: Random): Hyperparameter[String] = createHp(categories(random.nextInt(categories.size)))
   override def getResidual(left: Hyperparameter[String], right: Hyperparameter[String]): Double = if (left == right) 0 else maxResidual
 }
 
 case class BooleanHyperparameterType(paramName: String, maxResidual: Double = 1.0) extends HyperparameterType[Boolean] {
-  override val dataType: DataType = BooleanType
+  override val dataType: String = "boolean"
   override def createRandomHp(random: Random): Hyperparameter[Boolean] = createHp(random.nextBoolean())
   override def getResidual(left: Hyperparameter[Boolean], right: Hyperparameter[Boolean]): Double =
     if (left == right) 0 else maxResidual
@@ -98,7 +96,7 @@ trait NumericalHyperparameterType[A] extends HyperparameterType[A] {
 
 case class DoubleHyperparameterType(paramName: String, scale: Scale, maxResidual: Double = 1.0)
   extends NumericalHyperparameterType[Double] {
-  override val dataType: DataType = DoubleType
+  override val dataType: String = "double"
   override def createHpFromUnitValue(x: Double): Hyperparameter[Double] = createHp(scale.fromUnitInterval(x))
   override def getResidual(left: Hyperparameter[Double], right: Hyperparameter[Double]): Double =
     (scale.toUnitInterval(right.value) - scale.toUnitInterval(left.value)) * maxResidual
@@ -106,7 +104,7 @@ case class DoubleHyperparameterType(paramName: String, scale: Scale, maxResidual
 
 case class IntHyperparameterType(paramName: String, scale: Scale, maxResidual: Double = 1.0)
   extends NumericalHyperparameterType[Int] {
-  override val dataType: DataType = IntegerType
+  override val dataType: String = "integer"
   override def createHpFromUnitValue(x: Double): Hyperparameter[Int] = createHp(scale.fromUnitToInt(x))
   override def getResidual(left: Hyperparameter[Int], right: Hyperparameter[Int]): Double =
     (scale.toUnitInterval(right.value) - scale.toUnitInterval(left.value)) * maxResidual
